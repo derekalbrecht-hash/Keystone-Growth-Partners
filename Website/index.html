@@ -1,0 +1,2451 @@
+<!DOCTYPE html>
+<!-- saved from url=(0050)https://mockup-keystone-growth-partners.pages.dev/ -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Keystone Growth Partners</title>
+    <style>
+        :root {
+            --gold: #D4A843;
+            --gold-light: #E8C55A;
+            --gold-dark: #B8912E;
+            --silver: #C0C0C0;
+            --silver-light: #E8E8E8;
+            --silver-dark: #8A8A8A;
+            --bg-primary: #08080A;
+            --bg-secondary: #0E0E12;
+            --bg-tertiary: #141418;
+            --text-primary: #F2F2F2;
+            --text-secondary: #9A9AAA;
+            --grid-color: rgba(192, 192, 192, 0.04);
+            --grid-accent: rgba(212, 168, 67, 0.06);
+        }
+
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, Roboto, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-primary);
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        @keyframes appear {
+            to { opacity: 1; }
+        }
+
+        /* ═══════════════════════════════════════
+           NAVIGATION
+           ═══════════════════════════════════════ */
+
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: 1.25rem 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: transparent;
+            transition: background 0.4s ease, backdrop-filter 0.4s ease, padding 0.4s ease, opacity 0.6s ease;
+            opacity: 0;
+        }
+
+        .nav.scrolled {
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 0.75rem 3rem;
+            border-bottom: 1px solid rgba(212, 168, 67, 0.08);
+        }
+
+        .nav-logo {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            text-decoration: none;
+            position: relative;
+            z-index: 101;
+        }
+
+        .nav-logo img {
+            height: 36px;
+            width: auto;
+        }
+
+        .nav-logo-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .nav-logo-text span {
+            display: block;
+            font-weight: 300;
+            letter-spacing: 0.25em;
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            margin-top: 1px;
+        }
+
+        .nav-cta {
+            padding: 0.6rem 1.5rem;
+            border: 1px solid rgba(212, 168, 67, 0.3);
+            color: var(--gold);
+            font-size: 0.75rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-cta:hover {
+            border-color: var(--gold);
+            color: var(--bg-primary);
+            background: var(--gold);
+        }
+
+        /* ═══════════════════════════════════════
+           HERO SECTION
+           ═══════════════════════════════════════ */
+
+        .hero {
+            position: relative;
+            height: 100vh;
+            min-height: 500px;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 0;
+        }
+
+        /* Structural grid background */
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            background-image:
+                linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(ellipse 70% 60% at 30% 50%, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 70% 60% at 30% 50%, black 0%, transparent 100%);
+            will-change: transform;
+        }
+
+        .hero-grid::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image:
+                linear-gradient(to right, var(--grid-accent) 1px, transparent 1px),
+                linear-gradient(to bottom, var(--grid-accent) 1px, transparent 1px);
+            background-size: 240px 240px;
+            mask-image: radial-gradient(ellipse 50% 50% at 30% 50%, black 0%, transparent 100%);
+            -webkit-mask-image: radial-gradient(ellipse 50% 50% at 30% 50%, black 0%, transparent 100%);
+        }
+
+        /* Canvas for particles */
+        .hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Large logo watermark */
+        .hero-chevron {
+            position: absolute;
+            right: -2%;
+            top: 50%;
+            transform: translateY(-50%) scale(0.95);
+            width: 55vh;
+            z-index: 1;
+            opacity: 0;
+            transition: opacity 1.2s ease, transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: transform, opacity;
+        }
+
+        .hero-chevron.visible {
+            opacity: 1;
+            transform: translateY(-50%) scale(1);
+        }
+
+        .hero-chevron img {
+            width: 100%;
+            height: auto;
+            opacity: 0.07;
+            filter: brightness(1.2);
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, var(--bg-primary), transparent);
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Main content — left aligned */
+        .hero-content {
+            position: relative;
+            z-index: 3;
+            max-width: 750px;
+            padding: 0 0 0 clamp(2rem, 8vw, 8rem);
+            will-change: transform, opacity;
+        }
+
+        /* Staggered reveal for hero children */
+        .hero-reveal {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .hero-reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .hero-overline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+        }
+
+        .hero-overline::before {
+            content: '';
+            width: 30px;
+            height: 1px;
+            background: var(--gold-dark);
+        }
+
+        .hero-headline {
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            font-weight: 700;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 2rem;
+        }
+
+        .hero-headline .accent {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 70%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-sub {
+            font-size: clamp(1rem, 1.6vw, 1.15rem);
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-primary);
+            max-width: 500px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-sub strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .hero-cta-group {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1rem 2.25rem;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--bg-primary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--gold), var(--gold-light));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(212, 168, 67, 0.25), 0 0 60px rgba(212, 168, 67, 0.08);
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary .btn-text {
+            position: relative;
+            z-index: 1;
+        }
+
+        .btn-primary .btn-arrow {
+            position: relative;
+            z-index: 1;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-primary:hover .btn-arrow {
+            transform: translateX(3px);
+        }
+
+        .btn-secondary {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.75rem;
+            background: #000000;
+            color: #ffffff;
+            font-size: 0.8rem;
+            font-weight: 400;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            color: #ffffff;
+            border-color: rgba(255, 255, 255, 0.4);
+            background: #1a1a1a;
+        }
+
+        /* Horizontal rules */
+        .hero-rule {
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 1px;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .hero-rule.visible {
+            opacity: 1;
+        }
+
+        .hero-rule-top {
+            top: 30%;
+            background: linear-gradient(90deg, transparent, rgba(192, 192, 192, 0.06) 20%, rgba(192, 192, 192, 0.06) 80%, transparent);
+        }
+
+        .hero-rule-bottom {
+            top: 70%;
+            background: linear-gradient(90deg, transparent, rgba(212, 168, 67, 0.06) 15%, rgba(212, 168, 67, 0.04) 60%, transparent);
+        }
+
+        /* Scroll indicator */
+        .hero-scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: clamp(2rem, 8vw, 8rem);
+            z-index: 3;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+
+        .hero-scroll-indicator.visible {
+            opacity: 1;
+        }
+
+        .hero-scroll-indicator svg {
+            width: 18px;
+            height: 18px;
+            stroke: rgba(154, 154, 170, 0.4);
+            stroke-width: 1.5;
+            fill: none;
+        }
+
+        /* ═══════════════════════════════════════
+           PROBLEM SECTION
+           ═══════════════════════════════════════ */
+
+        .problem {
+            position: relative;
+            z-index: 4;
+            background: var(--bg-secondary);
+            padding: clamp(4rem, 7vw, 6rem) clamp(2rem, 8vw, 8rem);
+            overflow: hidden;
+        }
+
+        /* Top border */
+        .problem::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, rgba(212, 168, 67, 0.2) 20%, rgba(212, 168, 67, 0.4) 50%, rgba(212, 168, 67, 0.2) 80%, transparent 95%);
+        }
+
+        .problem-inner {
+            max-width: 1200px;
+        }
+
+        /* Compact header — single line overline + headline */
+        .problem-overline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold-dark);
+            margin-bottom: 1.25rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .problem-overline.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .problem-overline::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold-dark);
+        }
+
+        .problem-headline {
+            font-size: clamp(1.75rem, 3.5vw, 3rem);
+            font-weight: 600;
+            line-height: 1.15;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.7s ease 0.05s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+        }
+
+        .problem-headline.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .problem-headline .gold {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .problem-headline .dim {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        /* Pain point rows */
+        .problem-items {
+            border-top: 1px solid rgba(192, 192, 192, 0.06);
+        }
+
+        .problem-block {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            align-items: center;
+            gap: 0 clamp(1.5rem, 3vw, 3rem);
+            padding: clamp(1.5rem, 2.5vw, 2rem) 0;
+            border-bottom: 1px solid rgba(192, 192, 192, 0.06);
+            position: relative;
+            cursor: default;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), background 0.4s ease;
+        }
+
+        .problem-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .problem-block:hover {
+            background: rgba(212, 168, 67, 0.012);
+        }
+
+        .problem-block-number {
+            font-size: 0.6rem;
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            color: var(--gold);
+            font-variant-numeric: tabular-nums;
+        }
+
+        .problem-block-title {
+            font-size: clamp(1.5rem, 3vw, 2.75rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            transition: color 0.3s ease;
+        }
+
+        .problem-block:hover .problem-block-title {
+            color: var(--gold);
+        }
+
+        .problem-block-title .emphasis {
+            font-style: italic;
+            font-weight: 400;
+            color: var(--text-secondary);
+        }
+
+        .problem-block:hover .problem-block-title .emphasis {
+            color: var(--gold-dark);
+        }
+
+        .problem-block-desc {
+            font-size: clamp(0.78rem, 0.9vw, 0.88rem);
+            font-weight: 300;
+            line-height: 1.55;
+            color: var(--text-secondary);
+            max-width: 280px;
+            text-align: right;
+        }
+
+        .problem-block-desc strong {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* ═══════════════════════════════════════
+           SOLUTION SECTION — SCROLL-DRIVEN
+           ═══════════════════════════════════════ */
+
+        .solution {
+            position: relative;
+            z-index: 4;
+            background: var(--bg-primary);
+            overflow: clip;
+        }
+
+        .solution::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, rgba(212, 168, 67, 0.15) 20%, rgba(212, 168, 67, 0.5) 50%, rgba(212, 168, 67, 0.15) 80%, transparent 95%);
+        }
+
+        /* Tall wrapper to create scroll distance */
+        .solution-scroll-wrap {
+            height: 400vh;
+            position: relative;
+        }
+
+        /* Pinned viewport */
+        .solution-sticky {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        /* Ambient glow — follows active slide */
+        .solution-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 168, 67, 0.04) 0%, transparent 65%);
+            pointer-events: none;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            transition: opacity 0.8s ease;
+        }
+
+        /* Progress bar along left edge */
+        .solution-progress-track {
+            position: absolute;
+            left: clamp(1.5rem, 4vw, 3.5rem);
+            top: 50%;
+            transform: translateY(-50%);
+            height: 180px;
+            width: 1px;
+            background: rgba(192, 192, 192, 0.08);
+            z-index: 10;
+        }
+
+        .solution-progress-fill {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0%;
+            background: linear-gradient(to bottom, var(--gold-dark), var(--gold));
+            transition: height 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .solution-progress-counter {
+            position: absolute;
+            left: clamp(1.5rem, 4vw, 3.5rem);
+            top: 50%;
+            transform: translate(-50%, 110px);
+            font-size: 0.55rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            color: var(--gold-dark);
+            font-variant-numeric: tabular-nums;
+            z-index: 10;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Each slide — absolutely stacked */
+        .solution-slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            padding: 0 clamp(5rem, 12vw, 14rem);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.5s ease;
+        }
+
+        .solution-slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Slide inner content — parallax target */
+        .solution-slide > * {
+            will-change: transform, opacity;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Slide 0: the header intro */
+        .solution-intro {
+            max-width: 800px;
+        }
+
+        .solution-overline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-overline::before {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold);
+        }
+
+        .solution-headline {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.035em;
+            color: var(--text-primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .solution-headline .gold {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 50%, var(--gold-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .solution-headline .dim {
+            color: var(--text-secondary);
+            font-weight: 400;
+        }
+
+        .solution-intro-sub {
+            font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 500px;
+        }
+
+        /* Slides 1-3: pillar content */
+        .solution-pillar-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(3rem, 8vw, 8rem);
+            align-items: center;
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        .solution-pillar-left {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .solution-pillar-number {
+            font-size: clamp(5rem, 10vw, 9rem);
+            font-weight: 800;
+            line-height: 1;
+            letter-spacing: -0.05em;
+            background: linear-gradient(135deg, rgba(212, 168, 67, 0.15) 0%, rgba(212, 168, 67, 0.03) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 1rem;
+        }
+
+        .solution-pillar-title {
+            font-size: clamp(2rem, 4vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            color: var(--text-primary);
+            margin-bottom: 0.75rem;
+        }
+
+        .solution-pillar-title .emphasis {
+            font-style: italic;
+            font-weight: 400;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold), var(--gold-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .solution-pillar-subtitle {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .solution-pillar-subtitle .arrow {
+            color: var(--gold-dark);
+        }
+
+        .solution-pillar-subtitle .from {
+            text-decoration: line-through;
+            color: var(--silver-dark);
+        }
+
+        .solution-pillar-right {
+            position: relative;
+        }
+
+        .solution-pillar-desc {
+            font-size: clamp(0.9rem, 1.1vw, 1.05rem);
+            font-weight: 300;
+            line-height: 1.75;
+            color: var(--text-secondary);
+            border-left: 1px solid rgba(212, 168, 67, 0.15);
+            padding-left: clamp(1.5rem, 2.5vw, 2.5rem);
+        }
+
+        .solution-pillar-desc strong {
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        /* Scroll hint at bottom */
+        .solution-scroll-hint {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.55rem;
+            font-weight: 400;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            opacity: 0.4;
+            transition: opacity 0.4s ease;
+            z-index: 10;
+        }
+
+        /* ═══════════════════════════════════════
+           CTA SECTION
+           ═══════════════════════════════════════ */
+
+        .cta {
+            position: relative;
+            z-index: 4;
+            padding: clamp(6rem, 10vw, 10rem) clamp(2rem, 8vw, 8rem);
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 5%, rgba(212, 168, 67, 0.2) 20%, rgba(212, 168, 67, 0.5) 50%, rgba(212, 168, 67, 0.2) 80%, transparent 95%);
+        }
+
+        /* Gold radial glow behind content */
+        .cta-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(212, 168, 67, 0.06) 0%, rgba(212, 168, 67, 0.02) 35%, transparent 65%);
+            pointer-events: none;
+        }
+
+        /* Logo watermark behind CTA */
+        .cta-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40vh;
+            opacity: 0.04;
+            pointer-events: none;
+            filter: brightness(1.5);
+        }
+
+        .cta-inner {
+            position: relative;
+            z-index: 1;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .cta-overline {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        .cta-overline.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-overline::before,
+        .cta-overline::after {
+            content: '';
+            width: 24px;
+            height: 1px;
+            background: var(--gold-dark);
+        }
+
+        .cta-headline {
+            font-size: clamp(2.25rem, 5vw, 4rem);
+            font-weight: 700;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: 1.5rem;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity 0.7s ease 0.05s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.05s;
+        }
+
+        .cta-headline.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-headline .gold {
+            background: linear-gradient(135deg, var(--gold-dark) 0%, var(--gold) 40%, var(--gold-light) 70%, var(--gold) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cta-sub {
+            font-size: clamp(0.95rem, 1.2vw, 1.1rem);
+            font-weight: 300;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            max-width: 500px;
+            margin: 0 auto 2.5rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease 0.1s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.1s;
+        }
+
+        .cta-sub.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-actions {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.25rem;
+            opacity: 0;
+            transform: translateY(12px);
+            transition: opacity 0.6s ease 0.15s, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+        }
+
+        .cta-actions.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cta-actions .btn-primary {
+            padding: 1.15rem 2.75rem;
+            font-size: 0.85rem;
+        }
+
+        .cta-email {
+            font-size: 0.8rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            letter-spacing: 0.02em;
+        }
+
+        .cta-email a {
+            color: var(--gold-dark);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(212, 168, 67, 0.2);
+            transition: color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .cta-email a:hover {
+            color: var(--gold);
+            border-color: var(--gold);
+        }
+
+        /* ═══════════════════════════════════════
+           FOOTER
+           ═══════════════════════════════════════ */
+
+        .footer {
+            position: relative;
+            z-index: 4;
+            background: var(--bg-secondary);
+            padding: 3rem clamp(2rem, 8vw, 8rem) 2rem;
+        }
+
+        .footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent 10%, rgba(192, 192, 192, 0.06) 30%, rgba(192, 192, 192, 0.06) 70%, transparent 90%);
+        }
+
+        .footer-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .footer-brand img {
+            height: 28px;
+            width: auto;
+            opacity: 0.7;
+        }
+
+        .footer-brand-text {
+            font-size: 0.75rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+            line-height: 1.2;
+        }
+
+        .footer-brand-text span {
+            display: block;
+            font-weight: 300;
+            letter-spacing: 0.2em;
+            font-size: 0.58rem;
+            color: var(--silver-dark);
+            margin-top: 1px;
+        }
+
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 2rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(192, 192, 192, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+        }
+
+        .footer-copy {
+            font-size: 0.65rem;
+            font-weight: 300;
+            color: var(--silver-dark);
+            letter-spacing: 0.05em;
+        }
+
+        .footer-location {
+            font-size: 0.65rem;
+            font-weight: 300;
+            color: var(--silver-dark);
+            letter-spacing: 0.05em;
+        }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+
+        @media (max-width: 768px) {
+            .nav {
+                padding: 1rem 1.5rem;
+            }
+
+            .nav.scrolled {
+                padding: 0.6rem 1.5rem;
+            }
+
+            .nav-logo img {
+                height: 28px;
+            }
+
+            .nav-logo-text {
+                font-size: 0.75rem;
+            }
+
+            .nav-logo-text span {
+                font-size: 0.58rem;
+            }
+
+            .hero {
+                height: 100svh;
+                min-height: 500px;
+                align-items: center;
+            }
+
+            .hero-content {
+                padding: 0 1.5rem;
+            }
+
+            .hero-chevron {
+                right: -10%;
+                top: 8%;
+                transform: none !important;
+                width: 55vw;
+            }
+
+            .hero-chevron.visible {
+                transform: none !important;
+            }
+
+            .hero-grid {
+                mask-image: radial-gradient(ellipse 80% 50% at 50% 30%, black 0%, transparent 100%);
+                -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 30%, black 0%, transparent 100%);
+            }
+
+            .hero-overline {
+                margin-bottom: 1.5rem;
+                font-size: 0.6rem;
+            }
+
+            .hero-headline {
+                margin-bottom: 1.5rem;
+            }
+
+            .hero-sub {
+                font-size: 0.95rem;
+                margin-bottom: 2rem;
+            }
+
+            .hero-cta-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .hero-scroll-indicator {
+                left: 1.5rem;
+            }
+
+            .hero-rule {
+                display: none;
+            }
+
+            /* Problem section mobile */
+            .problem {
+                padding: 5rem 1.5rem;
+            }
+
+            .problem-block {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto auto auto;
+                gap: 0.4rem 0;
+                padding: 1.5rem 0;
+            }
+
+            .problem-block-number {
+                margin-bottom: 0.25rem;
+            }
+
+            .problem-block-desc {
+                text-align: left;
+                max-width: none;
+            }
+
+            /* Solution section mobile */
+            .solution-scroll-wrap {
+                height: auto !important;
+            }
+
+            .solution-sticky {
+                position: relative;
+                height: auto;
+                flex-direction: column;
+            }
+
+            .solution-slide {
+                position: relative;
+                opacity: 1;
+                pointer-events: auto;
+                padding: 4rem 1.5rem;
+                inset: unset;
+            }
+
+            .solution-pillar-layout {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .solution-pillar-number {
+                font-size: 3rem;
+            }
+
+            .solution-progress-track,
+            .solution-progress-counter,
+            .solution-scroll-hint,
+            .solution-glow {
+                display: none;
+            }
+
+            .solution-pillar-desc {
+                border-left: none;
+                padding-left: 0;
+            }
+
+            /* CTA section mobile */
+            .cta {
+                padding: 6rem 1.5rem;
+            }
+
+            .cta-glow {
+                width: 400px;
+                height: 400px;
+            }
+
+            .cta-watermark {
+                width: 50vw;
+            }
+
+            /* Footer mobile */
+            .footer {
+                padding: 3.5rem 1.5rem 2rem;
+            }
+
+            .footer-inner {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1.5rem;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .nav {
+                padding: 1rem 2rem;
+            }
+
+            .hero-content {
+                padding-left: 3rem;
+            }
+
+            .hero-chevron {
+                width: 40vh;
+            }
+
+            .problem {
+                padding: 4rem 2rem;
+            }
+
+            .solution-slide {
+                padding: 4rem 2rem;
+            }
+
+            .solution-progress-track,
+            .solution-progress-counter {
+                display: none;
+            }
+
+            .cta {
+                padding: 5rem 2rem;
+            }
+
+            .footer {
+                padding: 2.5rem 2rem 1.5rem;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-delay: 0ms !important;
+                transition-duration: 0.01ms !important;
+            }
+            .hero-content, .hero-chevron, .hero-grid,
+            .problem-overline, .problem-headline, .problem-block,
+            .cta-overline, .cta-headline, .cta-sub, .cta-actions {
+                transform: none !important;
+                opacity: 1 !important;
+            }
+            .solution-scroll-wrap {
+                height: auto !important;
+            }
+            .solution-sticky {
+                position: relative;
+                height: auto;
+            }
+            .solution-slide {
+                position: relative;
+                opacity: 1;
+                pointer-events: auto;
+            }
+        }
+
+        /* ═══════════════════════════════════════
+           SHADER BACKGROUND CANVAS
+           ═══════════════════════════════════════ */
+
+        #shaderBgCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           CTA SUBSCRIBE FORM
+           ═══════════════════════════════════════ */
+
+        .cta-subscribe-form {
+            display: flex;
+            gap: 0;
+            width: 100%;
+            max-width: 420px;
+            border: 1px solid rgba(212, 168, 67, 0.25);
+            background: rgba(14, 14, 18, 0.6);
+            transition: border-color 0.3s ease;
+        }
+
+        .cta-subscribe-form:focus-within {
+            border-color: rgba(212, 168, 67, 0.55);
+        }
+
+        .cta-email-input {
+            flex: 1;
+            padding: 0.85rem 1.25rem;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.85rem;
+            font-weight: 300;
+            letter-spacing: 0.02em;
+        }
+
+        .cta-email-input::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.5;
+        }
+
+        .cta-email-btn {
+            padding: 0.85rem 1.5rem;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--bg-primary);
+            border: none;
+            font-family: inherit;
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .cta-email-btn:hover { opacity: 0.85; }
+        .cta-email-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .cta-email-status {
+            font-size: 0.78rem;
+            font-weight: 300;
+            min-height: 1.2em;
+            letter-spacing: 0.02em;
+            transition: color 0.3s ease;
+        }
+
+        .cta-email-status.success { color: #5cb85c; }
+        .cta-email-status.error   { color: #e05c5c; }
+        .cta-email-status.info    { color: var(--gold-dark); }
+
+        /* ═══════════════════════════════════════
+           CONTACT MODAL
+           ═══════════════════════════════════════ */
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            z-index: 1000;
+            background: rgba(8, 8, 10, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.35s ease;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            position: relative;
+            background: var(--bg-secondary);
+            border: 1px solid rgba(212, 168, 67, 0.12);
+            padding: 3rem 2.5rem;
+            width: 100%;
+            max-width: 520px;
+            transform: translateY(20px) scale(0.97);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+            opacity: 0;
+        }
+
+        .modal-overlay.open .modal {
+            transform: translateY(0) scale(1);
+            opacity: 1;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.25rem;
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+            line-height: 1;
+            padding: 0.25rem 0.5rem;
+            transition: color 0.2s ease;
+        }
+
+        .modal-close:hover { color: var(--text-primary); }
+
+        .modal-overline {
+            font-size: 0.6rem;
+            font-weight: 500;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .modal-overline::before {
+            content: '';
+            width: 20px;
+            height: 1px;
+            background: var(--gold-dark);
+        }
+
+        .modal-headline {
+            font-size: 1.75rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            color: var(--text-primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .modal-sub {
+            font-size: 0.85rem;
+            font-weight: 300;
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .modal-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .modal-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .modal-label {
+            font-size: 0.65rem;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--text-secondary);
+        }
+
+        .modal-input,
+        .modal-textarea {
+            background: var(--bg-tertiary);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 0.88rem;
+            font-weight: 300;
+            padding: 0.8rem 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .modal-input:focus,
+        .modal-textarea:focus { border-color: rgba(212, 168, 67, 0.4); }
+
+        .modal-input::placeholder,
+        .modal-textarea::placeholder { color: var(--text-secondary); opacity: 0.4; }
+
+        .modal-textarea {
+            resize: vertical;
+            min-height: 120px;
+            max-height: 280px;
+        }
+
+        .modal-submit {
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, var(--gold-dark), var(--gold));
+            color: var(--bg-primary);
+            border: none;
+            font-family: inherit;
+            font-size: 0.78rem;
+            font-weight: 600;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            margin-top: 0.5rem;
+        }
+
+        .modal-submit:hover:not(:disabled) { opacity: 0.85; transform: translateY(-1px); }
+        .modal-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .modal-status {
+            font-size: 0.8rem;
+            font-weight: 300;
+            min-height: 1.2em;
+            text-align: center;
+            transition: color 0.3s ease;
+        }
+
+        .modal-status.success { color: #5cb85c; }
+        .modal-status.error   { color: #e05c5c; }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════════════ NAVIGATION ═══════════════ -->
+    <nav class="nav scrolled" id="nav" style="opacity: 1;">
+        <a href="/" class="nav-logo">
+            <img src="/static/Transparent.png" alt="Keystone Growth Partners">
+            <div class="nav-logo-text">
+                Keystone
+                <span>Growth Partners</span>
+            </div>
+        </a>
+
+        <a href="#contact" class="nav-cta" onclick="openContactModal(); return false;">Contact</a>
+    </nav>
+
+    <!-- ═══════════════ HERO ═══════════════ -->
+    <section class="hero" id="hero">
+        <canvas id="shaderBgCanvas"></canvas>
+        <div class="hero-grid" id="heroGrid" style="transform: translateY(172.6px);"></div>
+        <canvas class="hero-canvas" id="heroCanvas" width="1345" height="761"></canvas>
+
+        <div class="hero-chevron visible" id="heroChevron" style="transform: translateY(calc(-50% + 103.56px)) scale(1);">
+            <img src="/static/Transparent.png" alt="">
+        </div>
+
+        <div class="hero-rule hero-rule-top visible"></div>
+        <div class="hero-rule hero-rule-bottom visible"></div>
+
+        <div class="hero-content" id="heroContent" style="transform: translateY(-345.2px); opacity: 0;">
+            <div class="hero-overline hero-reveal visible" data-delay="0"><span>AI-Powered Growth Systems</span></div>
+
+            <h1 class="hero-headline hero-reveal visible" data-delay="120">
+                Stop Being the<br><span class="accent">System.</span>
+            </h1>
+
+            <p class="hero-sub hero-reveal visible" data-delay="240">
+                We architect <strong>AI-driven systems</strong> that generate pipeline,
+                close revenue, and scale operations so you can stop running your
+                business and start growing it.
+            </p>
+
+            <div class="hero-cta-group hero-reveal visible" data-delay="360">
+                <a href="#" class="btn-primary" onclick="handleBooking(event)">
+                    <span class="btn-text">Book a Strategy Call</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+                <a href="#solution" class="btn-secondary">
+                    See How It Works
+                </a>
+            </div>
+        </div>
+
+        <div class="hero-scroll-indicator visible">
+            <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </div>
+    </section>
+
+    <!-- ═══════════════ PROBLEM ═══════════════ -->
+    <section class="problem" id="problem">
+        <div class="problem-inner">
+            <div class="problem-overline visible" id="problemOverline">The problem</div>
+            <h2 class="problem-headline visible" id="problemHeadline">
+                You built the business. <span class="dim">Now the business runs</span> <span class="gold">you.</span>
+            </h2>
+
+        <div class="problem-items" id="problemItems">
+            <div class="problem-block visible" data-delay="0" style="transition-delay: 0ms;">
+                <span class="problem-block-number">01</span>
+                <h3 class="problem-block-title">You are <em class="emphasis">the pipeline</em></h3>
+                <p class="problem-block-desc">Every deal starts and ends with you. No system generates leads while you sleep. <strong>If you stop selling, revenue stops.</strong></p>
+            </div>
+            <div class="problem-block visible" data-delay="120" style="transition-delay: 120ms;">
+                <span class="problem-block-number">02</span>
+                <h3 class="problem-block-title">You are <em class="emphasis">the process</em></h3>
+                <p class="problem-block-desc">Onboarding, delivery, follow-ups. It all lives in your head. <strong>Your team can't scale what isn't documented or automated.</strong></p>
+            </div>
+            <div class="problem-block visible" data-delay="240" style="transition-delay: 240ms;">
+                <span class="problem-block-number">03</span>
+                <h3 class="problem-block-title">You are <em class="emphasis">the bottleneck</em></h3>
+                <p class="problem-block-desc">Every decision, every approval, every client touchpoint flows through one person. <strong>You.</strong></p>
+            </div>
+        </div>
+    </div></section>
+
+    <!-- ═══════════════ SOLUTION ═══════════════ -->
+    <section class="solution" id="solution">
+        <div class="solution-scroll-wrap" id="solutionWrap">
+            <div class="solution-sticky" id="solutionSticky">
+
+                <div class="solution-glow"></div>
+
+                <div class="solution-progress-track">
+                    <div class="solution-progress-fill" id="solutionProgressFill" style="height: 0%;"></div>
+                </div>
+                <div class="solution-progress-counter" id="solutionCounter" style="opacity: 0;">01 / 03</div>
+
+                <!-- Slide 0: Intro -->
+                <div class="solution-slide active" data-slide="0">
+                    <div class="solution-intro" style="transform: translateY(0px);">
+                        <div class="solution-overline">The shift</div>
+                        <h2 class="solution-headline">
+                            We build the systems.<br>
+                            <span class="dim">Your business runs</span> <span class="gold">itself.</span>
+                        </h2>
+                        <p class="solution-intro-sub">Three pillars that replace you as the system — so your company scales without burning you out.</p>
+                    </div>
+                </div>
+
+                <!-- Slide 1 -->
+                <div class="solution-slide" data-slide="1">
+                    <div class="solution-pillar-layout" style="transform: translateY(0px);">
+                        <div class="solution-pillar-left">
+                            <div class="solution-pillar-number">01</div>
+                            <h3 class="solution-pillar-title">AI-Powered<br><em class="emphasis">Lead Gen</em></h3>
+                            <div class="solution-pillar-subtitle">
+                                <span class="from">the pipeline</span>
+                                <span class="arrow">→</span>
+                                <span>automated pipeline</span>
+                            </div>
+                        </div>
+                        <div class="solution-pillar-right">
+                            <p class="solution-pillar-desc">
+                                Your pipeline fills itself. AI identifies, qualifies, and nurtures prospects around the clock. <strong>Leads appear while you sleep</strong>, pre-scored, pre-sequenced, and ready for your team to close.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 2 -->
+                <div class="solution-slide" data-slide="2">
+                    <div class="solution-pillar-layout" style="transform: translateY(0px);">
+                        <div class="solution-pillar-left">
+                            <div class="solution-pillar-number">02</div>
+                            <h3 class="solution-pillar-title">Systematized<br><em class="emphasis">Operations</em></h3>
+                            <div class="solution-pillar-subtitle">
+                                <span class="from">the process</span>
+                                <span class="arrow">→</span>
+                                <span>automated workflows</span>
+                            </div>
+                        </div>
+                        <div class="solution-pillar-right">
+                            <p class="solution-pillar-desc">
+                                Everything in your head becomes a living system. Onboarding, delivery, and follow-ups run on <strong>documented, automated workflows</strong> that your team executes without you.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slide 3 -->
+                <div class="solution-slide" data-slide="3">
+                    <div class="solution-pillar-layout" style="transform: translateY(0px);">
+                        <div class="solution-pillar-left">
+                            <div class="solution-pillar-number">03</div>
+                            <h3 class="solution-pillar-title">Autonomous<br><em class="emphasis">Growth Engine</em></h3>
+                            <div class="solution-pillar-subtitle">
+                                <span class="from">the bottleneck</span>
+                                <span class="arrow">→</span>
+                                <span>AI-driven decisions</span>
+                            </div>
+                        </div>
+                        <div class="solution-pillar-right">
+                            <p class="solution-pillar-desc">
+                                Decisions, approvals, and client touchpoints no longer bottleneck at you. <strong>AI systems handle the routine</strong> so you focus on the strategic work that actually grows the business.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="solution-scroll-hint" id="solutionHint" style="opacity: 0.4;">Scroll to explore</div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ CTA ═══════════════ -->
+    <section class="cta" id="contact">
+        <div class="cta-glow"></div>
+        <img src="/static/Transparent.png" alt="" class="cta-watermark">
+
+        <div class="cta-inner">
+            <div class="cta-overline visible" id="ctaOverline">Take the first step</div>
+            <h2 class="cta-headline visible" id="ctaHeadline">
+                Ready to stop being<br><span class="gold">the system?</span>
+            </h2>
+            <p class="cta-sub visible" id="ctaSub">
+                Book a 30-minute strategy call. We'll map your bottlenecks, show you what to automate first, and build a plan to get your time back.
+            </p>
+            <div class="cta-actions visible" id="ctaActions">
+                <a href="#" class="btn-primary" onclick="handleBooking(event)">
+                    <span class="btn-text">Book a Strategy Call</span>
+                    <span class="btn-arrow">→</span>
+                </a>
+
+                <div class="cta-subscribe-form">
+                    <input
+                        type="email"
+                        id="ctaEmailInput"
+                        class="cta-email-input"
+                        placeholder="your@email.com"
+                        autocomplete="email"
+                    >
+                    <button type="button" class="cta-email-btn" onclick="handleSubscribe()">
+                        Get Updates
+                    </button>
+                </div>
+                <p class="cta-email-status" id="ctaEmailStatus"></p>
+                <p class="cta-email">or reach us at <a href="mailto:hello@keystonegrowth.com">hello@keystonegrowth.com</a></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ═══════════════ FOOTER ═══════════════ -->
+    <footer class="footer">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="/static/Transparent.png" alt="Keystone Growth Partners">
+                <div class="footer-brand-text">
+                    Keystone
+                    <span>Growth Partners</span>
+                </div>
+            </div>
+            <a href="#contact" class="nav-cta" style="font-size: 0.7rem; padding: 0.5rem 1.25rem;" onclick="openContactModal(); return false;">Contact</a>
+        </div>
+        <div class="footer-bottom">
+            <p class="footer-copy">© <script>document.write(new Date().getFullYear())</script>2026 Keystone Growth Partners. All rights reserved.</p>
+            <p class="footer-location">Ramsey, MN</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ═══════════════════════════════════════
+           NAVIGATION
+           ═══════════════════════════════════════ */
+        const nav = document.getElementById('nav');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* --- Scrolled class for background blur --- */
+        let ticking = false;
+
+        function handleNavScroll() {
+            const currentScrollY = window.scrollY;
+
+            if (currentScrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+
+            ticking = false;
+        }
+
+        window.addEventListener('scroll', () => {
+            if (!ticking) {
+                requestAnimationFrame(handleNavScroll);
+                ticking = true;
+            }
+        }, { passive: true });
+
+        /* ═══════════════════════════════════════
+           HERO — INTERSECTION OBSERVER REVEALS
+           ═══════════════════════════════════════ */
+        const heroEl = document.getElementById('hero');
+        const heroContent = document.getElementById('heroContent');
+        const heroChevron = document.getElementById('heroChevron');
+        const heroGrid = document.getElementById('heroGrid');
+        const isMobile = window.innerWidth < 768;
+
+        // Hero content staggered reveal
+        const heroReveals = document.querySelectorAll('.hero-reveal');
+        const heroRules = document.querySelectorAll('.hero-rule');
+        const heroScrollInd = document.querySelector('.hero-scroll-indicator');
+
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Nav
+                    nav.style.opacity = '1';
+                    // Stagger the child reveals
+                    heroReveals.forEach(el => {
+                        const delay = parseInt(el.dataset.delay) || 0;
+                        setTimeout(() => el.classList.add('visible'), delay);
+                    });
+                    // Chevron
+                    setTimeout(() => heroChevron.classList.add('visible'), 100);
+                    // Rules
+                    heroRules.forEach((r, i) => {
+                        setTimeout(() => r.classList.add('visible'), 300 + i * 150);
+                    });
+                    // Scroll indicator
+                    setTimeout(() => heroScrollInd.classList.add('visible'), 600);
+                    heroObserver.disconnect();
+                }
+            });
+        }, { threshold: 0.1 });
+
+        heroObserver.observe(heroEl);
+
+        /* ═══════════════════════════════════════
+           HERO PARALLAX
+           ═══════════════════════════════════════ */
+        function handleParallax() {
+            const scrollY = window.scrollY;
+            const heroH = heroEl.offsetHeight;
+
+            if (scrollY > heroH * 1.5) return;
+
+            const progress = scrollY / heroH;
+
+            // Content moves up faster + fades out
+            heroContent.style.transform = `translateY(${scrollY * -0.4}px)`;
+            heroContent.style.opacity = Math.max(0, 1 - progress * 1.8);
+
+            // Chevron drifts slower
+            heroChevron.style.transform = `translateY(calc(-50% + ${scrollY * 0.12}px)) scale(1)`;
+
+            // Grid parallax — more noticeable
+            heroGrid.style.transform = `translateY(${scrollY * 0.2}px)`;
+        }
+
+        if (!isMobile) {
+            window.addEventListener('scroll', handleParallax, { passive: true });
+        }
+
+        /* ═══════════════════════════════════════
+           PROBLEM SECTION — INTERSECTION OBSERVER
+           ═══════════════════════════════════════ */
+        const problemOverline = document.getElementById('problemOverline');
+        const problemHeadline = document.getElementById('problemHeadline');
+        const problemBlocks = document.querySelectorAll('.problem-block');
+
+        const problemObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        problemObserver.observe(problemOverline);
+        problemObserver.observe(problemHeadline);
+        problemBlocks.forEach((block) => {
+            const delay = parseInt(block.dataset.delay) || 0;
+            block.style.transitionDelay = `${delay}ms`;
+            problemObserver.observe(block);
+        });
+
+        /* ═══════════════════════════════════════
+           SOLUTION SECTION — SCROLL-DRIVEN SLIDES
+           ═══════════════════════════════════════ */
+        const solutionWrap = document.getElementById('solutionWrap');
+        const solutionSlides = document.querySelectorAll('.solution-slide');
+        const solutionProgressFill = document.getElementById('solutionProgressFill');
+        const solutionCounter = document.getElementById('solutionCounter');
+        const solutionHint = document.getElementById('solutionHint');
+        const totalSlides = solutionSlides.length; // 4 (intro + 3 pillars)
+
+        let solutionCurrentSlide = -1;
+        let solutionActive = false;
+
+        function handleSolutionScroll() {
+            if (window.innerWidth < 768) {
+                // Mobile: reset everything and bail
+                if (solutionActive) {
+                    solutionSlides.forEach(s => {
+                        s.classList.add('active');
+                        const content = s.firstElementChild;
+                        if (content) content.style.transform = '';
+                    });
+                    solutionProgressFill.style.height = '0%';
+                    solutionCounter.style.opacity = '0';
+                    solutionHint.style.opacity = '0';
+                    solutionActive = false;
+                    solutionCurrentSlide = -1;
+                }
+                return;
+            }
+            solutionActive = true;
+
+            const rect = solutionWrap.getBoundingClientRect();
+            const scrolled = -rect.top;
+            const totalScroll = rect.height - window.innerHeight;
+            const progress = Math.max(0, Math.min(1, scrolled / totalScroll));
+
+            // Which slide should be active
+            const slideIndex = Math.min(totalSlides - 1, Math.floor(progress * totalSlides));
+
+            if (slideIndex !== solutionCurrentSlide) {
+                solutionSlides.forEach(s => s.classList.remove('active'));
+                solutionSlides[slideIndex].classList.add('active');
+                solutionCurrentSlide = slideIndex;
+            }
+
+            // Continuous parallax within each slide
+            const slideSize = 1 / totalSlides;
+            const slideStart = slideIndex * slideSize;
+            const subProgress = (progress - slideStart) / slideSize; // 0→1 within current slide
+
+            solutionSlides.forEach((slide, i) => {
+                const content = slide.firstElementChild;
+                if (!content) return;
+                if (i === slideIndex) {
+                    // Active slide: drift upward as you scroll through it
+                    const drift = subProgress * -30;
+                    content.style.transform = `translateY(${drift}px)`;
+                } else if (i === slideIndex - 1) {
+                    // Just-exited slide: hold at final drift position
+                    content.style.transform = 'translateY(-30px)';
+                } else if (i === slideIndex + 1) {
+                    // Next slide: reset to starting position
+                    content.style.transform = 'translateY(0px)';
+                }
+            });
+
+            // Progress bar (only counts pillar slides 1-3)
+            const pillarProgress = Math.max(0, Math.min(1, (progress - 0.25) / 0.75));
+            solutionProgressFill.style.height = `${pillarProgress * 100}%`;
+
+            // Counter
+            const pillarNum = Math.max(1, Math.min(3, Math.ceil(pillarProgress * 3)));
+            solutionCounter.textContent = `0${pillarNum} / 03`;
+
+            // Hide counter on intro slide
+            solutionCounter.style.opacity = slideIndex === 0 ? '0' : '1';
+
+            // Hide scroll hint after first scroll
+            solutionHint.style.opacity = progress < 0.05 ? '0.4' : '0';
+        }
+
+        window.addEventListener('scroll', handleSolutionScroll, { passive: true });
+        window.addEventListener('resize', handleSolutionScroll);
+
+        /* ═══════════════════════════════════════
+           CTA SECTION — INTERSECTION OBSERVER
+           ═══════════════════════════════════════ */
+        const ctaReveals = document.querySelectorAll('#ctaOverline, #ctaHeadline, #ctaSub, #ctaActions');
+
+        const ctaObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        ctaReveals.forEach(el => ctaObserver.observe(el));
+
+        /* ═══════════════════════════════════════
+           PARTICLE CANVAS
+           ═══════════════════════════════════════ */
+        const canvas = document.getElementById('heroCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height, nodes;
+        const nodeCount = isMobile ? 30 : 70;
+        const connectionDistance = isMobile ? 120 : 180;
+        const mouseRadius = 200;
+        let mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+            width = canvas.width = heroEl.clientWidth;
+            height = canvas.height = heroEl.clientHeight;
+        }
+
+        function createNodes() {
+            nodes = [];
+            for (let i = 0; i < nodeCount; i++) {
+                const isGold = Math.random() > 0.6;
+                nodes.push({
+                    x: Math.random() * width,
+                    y: Math.random() * height,
+                    vx: (Math.random() - 0.5) * 0.25,
+                    vy: (Math.random() - 0.5) * 0.25,
+                    radius: Math.random() * 1.2 + 0.3,
+                    isGold,
+                    opacity: isGold ? Math.random() * 0.3 + 0.15 : Math.random() * 0.2 + 0.05,
+                    pulseSpeed: Math.random() * 0.015 + 0.003,
+                    pulseOffset: Math.random() * Math.PI * 2,
+                });
+            }
+        }
+
+        function drawFrame(time) {
+            ctx.clearRect(0, 0, width, height);
+
+            for (let i = 0; i < nodes.length; i++) {
+                const a = nodes[i];
+                a.x += a.vx;
+                a.y += a.vy;
+
+                if (a.x < -50) a.x = width + 50;
+                if (a.x > width + 50) a.x = -50;
+                if (a.y < -50) a.y = height + 50;
+                if (a.y > height + 50) a.y = -50;
+
+                const dx = a.x - mouse.x;
+                const dy = a.y - mouse.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < mouseRadius && dist > 0) {
+                    const force = (mouseRadius - dist) / mouseRadius * 0.008;
+                    a.vx += (dx / dist) * force;
+                    a.vy += (dy / dist) * force;
+                }
+                a.vx *= 0.998;
+                a.vy *= 0.998;
+
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const b = nodes[j];
+                    const cdx = a.x - b.x;
+                    const cdy = a.y - b.y;
+                    const cdist = Math.sqrt(cdx * cdx + cdy * cdy);
+                    if (cdist < connectionDistance) {
+                        const lineOpacity = (1 - cdist / connectionDistance) * 0.1;
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.strokeStyle = (a.isGold && b.isGold)
+                            ? `rgba(212, 168, 67, ${lineOpacity})`
+                            : `rgba(192, 192, 192, ${lineOpacity * 0.4})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                }
+
+                const pulse = Math.sin(time * a.pulseSpeed + a.pulseOffset) * 0.5 + 0.5;
+                const r = a.radius + pulse * 0.5;
+                ctx.beginPath();
+                ctx.arc(a.x, a.y, r, 0, Math.PI * 2);
+                ctx.fillStyle = a.isGold
+                    ? `rgba(212, 168, 67, ${a.opacity})`
+                    : `rgba(192, 192, 192, ${a.opacity})`;
+                ctx.fill();
+
+                if (a.isGold && a.radius > 1) {
+                    ctx.beginPath();
+                    ctx.arc(a.x, a.y, r + 4, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(212, 168, 67, ${0.015 + pulse * 0.015})`;
+                    ctx.fill();
+                }
+            }
+            requestAnimationFrame(drawFrame);
+        }
+
+        if (!isMobile) {
+            window.addEventListener('mousemove', (e) => {
+                mouse.x = e.clientX;
+                mouse.y = e.clientY;
+            }, { passive: true });
+        }
+
+        resize();
+        createNodes();
+        requestAnimationFrame(drawFrame);
+
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => { resize(); createNodes(); }, 150);
+        }, { passive: true });
+    </script>
+
+    <!-- ═══════════════ CONTACT MODAL ═══════════════ -->
+    <div class="modal-overlay" id="contactModal" onclick="handleModalBackdropClick(event)">
+        <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalHeadline">
+            <button class="modal-close" onclick="closeContactModal()" aria-label="Close">&times;</button>
+
+            <div class="modal-overline">Get in touch</div>
+            <h2 class="modal-headline" id="modalHeadline">Let's talk.</h2>
+            <p class="modal-sub">Send us a message and we'll get back to you within 24 hours.</p>
+
+            <form class="modal-form" id="contactForm" onsubmit="handleContactSubmit(event)">
+                <div class="modal-field">
+                    <label class="modal-label" for="contactName">Your Name</label>
+                    <input
+                        class="modal-input"
+                        type="text"
+                        id="contactName"
+                        name="name"
+                        placeholder="Jane Smith"
+                        autocomplete="name"
+                        required
+                    >
+                </div>
+                <div class="modal-field">
+                    <label class="modal-label" for="contactEmail">Email Address</label>
+                    <input
+                        class="modal-input"
+                        type="email"
+                        id="contactEmail"
+                        name="email"
+                        placeholder="jane@company.com"
+                        autocomplete="email"
+                        required
+                    >
+                </div>
+                <div class="modal-field">
+                    <label class="modal-label" for="contactMessage">Message</label>
+                    <textarea
+                        class="modal-textarea"
+                        id="contactMessage"
+                        name="message"
+                        placeholder="Tell us what you're working on..."
+                        required
+                    ></textarea>
+                </div>
+                <button type="submit" class="modal-submit" id="contactSubmitBtn">
+                    Send Message →
+                </button>
+                <p class="modal-status" id="contactStatus"></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    /* ═══════════════════════════════════════
+       BACKEND INTEGRATION
+       ═══════════════════════════════════════ */
+
+    // ── Calendly URL (fetched from server on load) ──
+    let calendlyUrl = null;
+
+    (function loadCalendlyUrl() {
+        fetch('/api/calendly-url')
+            .then(r => r.json())
+            .then(data => { if (data.url) calendlyUrl = data.url; })
+            .catch(() => {});
+    })();
+
+    function handleBooking(event) {
+        event.preventDefault();
+        if (calendlyUrl) {
+            window.open(calendlyUrl, '_blank', 'noopener,noreferrer');
+        } else {
+            openContactModal();
+        }
+    }
+
+    // ── Subscribe Form ──
+    function handleSubscribe() {
+        const input  = document.getElementById('ctaEmailInput');
+        const status = document.getElementById('ctaEmailStatus');
+        const btn    = document.querySelector('.cta-email-btn');
+        const email  = input.value.trim();
+
+        if (!email) { setStatus(status, 'Please enter your email address.', 'error', true); return; }
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        setStatus(status, '', '', true);
+
+        fetch('/api/subscribe', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                setStatus(status, data.message, 'success', true);
+                input.value = '';
+            } else if (data.status === 'already_subscribed') {
+                setStatus(status, data.message, 'info', true);
+            } else {
+                setStatus(status, data.message || 'Something went wrong.', 'error', true);
+            }
+        })
+        .catch(() => setStatus(status, 'Network error. Please try again.', 'error', true))
+        .finally(() => { btn.disabled = false; btn.textContent = 'Get Updates'; });
+    }
+
+    document.getElementById('ctaEmailInput').addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') handleSubscribe();
+    });
+
+    // ── Contact Modal ──
+    function openContactModal() {
+        const overlay = document.getElementById('contactModal');
+        overlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('contactName').focus(), 350);
+    }
+
+    function closeContactModal() {
+        const overlay = document.getElementById('contactModal');
+        overlay.classList.remove('open');
+        document.body.style.overflow = '';
+        setTimeout(() => {
+            document.getElementById('contactForm').reset();
+            setStatus(document.getElementById('contactStatus'), '', '', false);
+        }, 350);
+    }
+
+    function handleModalBackdropClick(event) {
+        if (event.target === document.getElementById('contactModal')) closeContactModal();
+    }
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            const overlay = document.getElementById('contactModal');
+            if (overlay.classList.contains('open')) closeContactModal();
+        }
+    });
+
+    function handleContactSubmit(event) {
+        event.preventDefault();
+        const name    = document.getElementById('contactName').value.trim();
+        const email   = document.getElementById('contactEmail').value.trim();
+        const message = document.getElementById('contactMessage').value.trim();
+        const status  = document.getElementById('contactStatus');
+        const btn     = document.getElementById('contactSubmitBtn');
+
+        btn.disabled = true;
+        btn.textContent = 'Sending...';
+        setStatus(status, '', '', false);
+
+        fetch('/api/contact', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, message })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.status === 'ok') {
+                setStatus(status, data.message, 'success', false);
+                document.getElementById('contactForm').reset();
+                setTimeout(closeContactModal, 2500);
+            } else {
+                setStatus(status, data.message || 'Something went wrong.', 'error', false);
+            }
+        })
+        .catch(() => setStatus(status, 'Network error. Please try again.', 'error', false))
+        .finally(() => { btn.disabled = false; btn.textContent = 'Send Message →'; });
+    }
+
+    // ── Utility ──
+    function setStatus(el, message, type, isSubscribe) {
+        el.textContent = message;
+        const base = isSubscribe ? 'cta-email-status' : 'modal-status';
+        el.className = base + (type ? ' ' + type : '');
+    }
+    </script>
+
+    <script>
+    /* ═══════════════════════════════════════
+       HERO SHADER BACKGROUND (WebGL)
+       ═══════════════════════════════════════ */
+    (function initShaderBg() {
+        var canvas = document.getElementById('shaderBgCanvas');
+        var gl = canvas.getContext('webgl');
+        if (!gl) return;
+
+        var vsSource = [
+            'attribute vec4 aVertexPosition;',
+            'void main() { gl_Position = aVertexPosition; }'
+        ].join('\n');
+
+        var fsSource = [
+            'precision highp float;',
+            'uniform vec2 iResolution;',
+            'uniform float iTime;',
+            'const float overallSpeed = 0.2;',
+            'const float gridSmoothWidth = 0.015;',
+            'const float axisWidth = 0.05;',
+            'const float majorLineWidth = 0.025;',
+            'const float minorLineWidth = 0.0125;',
+            'const float majorLineFrequency = 5.0;',
+            'const float minorLineFrequency = 1.0;',
+            'const float scale = 5.0;',
+            'const vec4 lineColor = vec4(0.831, 0.659, 0.263, 1.0);',
+            'const float minLineWidth = 0.01;',
+            'const float maxLineWidth = 0.2;',
+            'const float lineSpeed = 1.0 * overallSpeed;',
+            'const float lineAmplitude = 1.0;',
+            'const float lineFrequency = 0.2;',
+            'const float warpSpeed = 0.2 * overallSpeed;',
+            'const float warpFrequency = 0.5;',
+            'const float warpAmplitude = 1.0;',
+            'const float offsetFrequency = 0.5;',
+            'const float offsetSpeed = 1.33 * overallSpeed;',
+            'const float minOffsetSpread = 0.6;',
+            'const float maxOffsetSpread = 2.0;',
+            'const int linesPerGroup = 16;',
+            '#define drawCircle(pos, radius, coord) smoothstep(radius + gridSmoothWidth, radius, length(coord - (pos)))',
+            '#define drawSmoothLine(pos, halfWidth, t) smoothstep(halfWidth, 0.0, abs(pos - (t)))',
+            '#define drawCrispLine(pos, halfWidth, t) smoothstep(halfWidth + gridSmoothWidth, halfWidth, abs(pos - (t)))',
+            '#define drawPeriodicLine(freq, width, t) drawCrispLine(freq / 2.0, width, abs(mod(t, freq) - (freq) / 2.0))',
+            'float drawGridLines(float axis) {',
+            '  return drawCrispLine(0.0, axisWidth, axis)',
+            '        + drawPeriodicLine(majorLineFrequency, majorLineWidth, axis)',
+            '        + drawPeriodicLine(minorLineFrequency, minorLineWidth, axis);',
+            '}',
+            'float random(float t) {',
+            '  return (cos(t) + cos(t * 1.3 + 1.3) + cos(t * 1.4 + 1.4)) / 3.0;',
+            '}',
+            'float getPlasmaY(float x, float horizontalFade, float offset) {',
+            '  return random(x * lineFrequency + iTime * lineSpeed) * horizontalFade * lineAmplitude + offset;',
+            '}',
+            'void main() {',
+            '  vec2 fragCoord = gl_FragCoord.xy;',
+            '  vec4 fragColor;',
+            '  vec2 uv = fragCoord.xy / iResolution.xy;',
+            '  vec2 space = (fragCoord - iResolution.xy / 2.0) / iResolution.x * 2.0 * scale;',
+            '  float horizontalFade = 1.0 - (cos(uv.x * 6.28) * 0.5 + 0.5);',
+            '  float verticalFade = 1.0 - (cos(uv.y * 6.28) * 0.5 + 0.5);',
+            '  space.y += random(space.x * warpFrequency + iTime * warpSpeed) * warpAmplitude * (0.5 + horizontalFade);',
+            '  space.x += random(space.y * warpFrequency + iTime * warpSpeed + 2.0) * warpAmplitude * horizontalFade;',
+            '  vec4 lines = vec4(0.0);',
+            '  vec4 bgColor1 = vec4(0.031, 0.031, 0.039, 1.0);',
+            '  vec4 bgColor2 = vec4(0.07, 0.055, 0.02, 1.0);',
+            '  for(int l = 0; l < linesPerGroup; l++) {',
+            '    float normalizedLineIndex = float(l) / float(linesPerGroup);',
+            '    float offsetTime = iTime * offsetSpeed;',
+            '    float offsetPosition = float(l) + space.x * offsetFrequency;',
+            '    float rand = random(offsetPosition + offsetTime) * 0.5 + 0.5;',
+            '    float halfWidth = mix(minLineWidth, maxLineWidth, rand * horizontalFade) / 2.0;',
+            '    float offset = random(offsetPosition + offsetTime * (1.0 + normalizedLineIndex)) * mix(minOffsetSpread, maxOffsetSpread, horizontalFade);',
+            '    float linePosition = getPlasmaY(space.x, horizontalFade, offset);',
+            '    float line = drawSmoothLine(linePosition, halfWidth, space.y) / 2.0 + drawCrispLine(linePosition, halfWidth * 0.15, space.y);',
+            '    float circleX = mod(float(l) + iTime * lineSpeed, 25.0) - 12.0;',
+            '    vec2 circlePosition = vec2(circleX, getPlasmaY(circleX, horizontalFade, offset));',
+            '    float circle = drawCircle(circlePosition, 0.01, space) * 4.0;',
+            '    line = line + circle;',
+            '    lines += line * lineColor * rand;',
+            '  }',
+            '  fragColor = mix(bgColor1, bgColor2, uv.x);',
+            '  fragColor *= verticalFade;',
+            '  fragColor.a = 1.0;',
+            '  fragColor += lines;',
+            '  gl_FragColor = fragColor;',
+            '}'
+        ].join('\n');
+
+        function compileShader(type, source) {
+            var shader = gl.createShader(type);
+            gl.shaderSource(shader, source);
+            gl.compileShader(shader);
+            if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+                console.warn('Shader error:', gl.getShaderInfoLog(shader));
+                gl.deleteShader(shader);
+                return null;
+            }
+            return shader;
+        }
+
+        var vs = compileShader(gl.VERTEX_SHADER, vsSource);
+        var fs = compileShader(gl.FRAGMENT_SHADER, fsSource);
+        if (!vs || !fs) return;
+
+        var program = gl.createProgram();
+        gl.attachShader(program, vs);
+        gl.attachShader(program, fs);
+        gl.linkProgram(program);
+        if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+            console.warn('Program link error:', gl.getProgramInfoLog(program));
+            return;
+        }
+
+        var positionBuffer = gl.createBuffer();
+        gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+
+        var attribLoc = gl.getAttribLocation(program, 'aVertexPosition');
+        var resolutionLoc = gl.getUniformLocation(program, 'iResolution');
+        var timeLoc = gl.getUniformLocation(program, 'iTime');
+
+        var heroEl = document.getElementById('hero');
+
+        function resize() {
+            canvas.width  = heroEl.clientWidth;
+            canvas.height = heroEl.clientHeight;
+            gl.viewport(0, 0, canvas.width, canvas.height);
+        }
+
+        window.addEventListener('resize', resize, { passive: true });
+        resize();
+
+        var startTime = Date.now();
+
+        function render() {
+            var t = (Date.now() - startTime) / 1000;
+            gl.clearColor(0, 0, 0, 1);
+            gl.clear(gl.COLOR_BUFFER_BIT);
+            gl.useProgram(program);
+            gl.uniform2f(resolutionLoc, canvas.width, canvas.height);
+            gl.uniform1f(timeLoc, t);
+            gl.bindBuffer(gl.ARRAY_BUFFER, positionBuffer);
+            gl.vertexAttribPointer(attribLoc, 2, gl.FLOAT, false, 0, 0);
+            gl.enableVertexAttribArray(attribLoc);
+            gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+            requestAnimationFrame(render);
+        }
+
+        requestAnimationFrame(render);
+    })();
+    </script>
+
+</body></html>
