@@ -133,8 +133,9 @@ def api_calendly_url():
 
 # ── Startup ────────────────────────────────────────────────────────────────────
 
+init_db()
+
 if __name__ == '__main__':
-    init_db()
     port  = int(os.getenv('FLASK_PORT', 5000))
     debug = os.getenv('FLASK_ENV', 'development') == 'development'
     logger.info(f'Keystone Growth Partners server starting → http://localhost:{port}')
