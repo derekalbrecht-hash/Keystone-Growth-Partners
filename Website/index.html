@@ -1760,7 +1760,7 @@
                     </button>
                 </div>
                 <p class="cta-email-status" id="ctaEmailStatus"></p>
-                <p class="cta-email">or reach us at <a href="mailto:hello@keystonegrowth.com">hello@keystonegrowth.com</a></p>
+                <p class="cta-email">or reach us at <a href="mailto:derek.albrecht@keystn.co">derek.albrecht@keystn.co</a></p>
             </div>
         </div>
     </section>
@@ -2171,14 +2171,7 @@
        ═══════════════════════════════════════ */
 
     // ── Calendly URL (fetched from server on load) ──
-    let calendlyUrl = null;
-
-    (function loadCalendlyUrl() {
-        fetch('/api/calendly-url')
-            .then(r => r.json())
-            .then(data => { if (data.url) calendlyUrl = data.url; })
-            .catch(() => {});
-    })();
+    let calendlyUrl = 'https://calendly.com/derek-albrecht-keystn/30min';
 
     function handleBooking(event) {
         event.preventDefault();
@@ -2197,29 +2190,14 @@
         const email  = input.value.trim();
 
         if (!email) { setStatus(status, 'Please enter your email address.', 'error', true); return; }
+        if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus(status, 'Please enter a valid email address.', 'error', true); return; }
 
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-        setStatus(status, '', '', true);
+        const subject = encodeURIComponent('Keep me updated on Keystone Growth Partners');
+        const body    = encodeURIComponent('Hi,\n\nPlease add me to your updates list.\n\nMy email: ' + email);
+        window.open('mailto:derek.albrecht@keystn.co?subject=' + subject + '&body=' + body);
 
-        fetch('/api/subscribe', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-        })
-        .then(r => r.json())
-        .then(data => {
-            if (data.status === 'ok') {
-                setStatus(status, data.message, 'success', true);
-                input.value = '';
-            } else if (data.status === 'already_subscribed') {
-                setStatus(status, data.message, 'info', true);
-            } else {
-                setStatus(status, data.message || 'Something went wrong.', 'error', true);
-            }
-        })
-        .catch(() => setStatus(status, 'Network error. Please try again.', 'error', true))
-        .finally(() => { btn.disabled = false; btn.textContent = 'Get Updates'; });
+        setStatus(status, "We'll be in touch!", 'success', true);
+        input.value = '';
     }
 
     document.getElementById('ctaEmailInput').addEventListener('keydown', function(e) {
@@ -2263,27 +2241,22 @@
         const status  = document.getElementById('contactStatus');
         const btn     = document.getElementById('contactSubmitBtn');
 
-        btn.disabled = true;
-        btn.textContent = 'Sending...';
-        setStatus(status, '', '', false);
+        if (!name) { setStatus(status, 'Name is required.', 'error', false); return; }
+        if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { setStatus(status, 'A valid email is required.', 'error', false); return; }
+        if (!message || message.length < 10) { setStatus(status, 'Message must be at least 10 characters.', 'error', false); return; }
 
-        fetch('/api/contact', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name, email, message })
-        })
-        .then(r => r.json())
-        .then(data => {
-            if (data.status === 'ok') {
-                setStatus(status, data.message, 'success', false);
-                document.getElementById('contactForm').reset();
-                setTimeout(closeContactModal, 2500);
-            } else {
-                setStatus(status, data.message || 'Something went wrong.', 'error', false);
-            }
-        })
-        .catch(() => setStatus(status, 'Network error. Please try again.', 'error', false))
-        .finally(() => { btn.disabled = false; btn.textContent = 'Send Message →'; });
+        btn.disabled = true;
+        btn.textContent = 'Opening...';
+
+        const subject = encodeURIComponent('Website Inquiry from ' + name);
+        const body    = encodeURIComponent('Name: ' + name + '\nFrom: ' + email + '\n\n' + message);
+        window.open('mailto:derek.albrecht@keystn.co?subject=' + subject + '&body=' + body);
+
+        setStatus(status, 'Your email app should open — just hit send!', 'success', false);
+        document.getElementById('contactForm').reset();
+        setTimeout(closeContactModal, 2500);
+        btn.disabled = false;
+        btn.textContent = 'Send Message →';
     }
 
     // ── Utility ──
